@@ -1,8 +1,8 @@
-const { Event } = require('./models/Event');
-const { User } = require('./models/User');
-const { ApolloError } = require('apollo-server-errors');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { Event } = require("./models/Event");
+const { User } = require("./models/User");
+const { ApolloError } = require("apollo-server-errors");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // GraphQL Resolvers
 const resolvers = {
@@ -76,7 +76,7 @@ const resolvers = {
 
       // throw error if so
       if (oldUser) {
-        throw new ApolloError('Email already in use');
+        throw new ApolloError("Email already in use");
       }
 
       // hash password
@@ -95,7 +95,7 @@ const resolvers = {
       const token = jwt.sign(
         { id: newUser.id, email: newUser.email },
         process.env.JWT_SECRET,
-        { expiresIn: '2h' }
+        { expiresIn: "2h" }
       );
 
       // append token to newUser
@@ -111,7 +111,7 @@ const resolvers = {
 
       // throw error if not
       if (!user) {
-        throw new ApolloError('Email not found');
+        throw new ApolloError("Email not found");
       }
 
       // check if password is correct
@@ -119,14 +119,14 @@ const resolvers = {
 
       // throw error if not
       if (!isPasswordCorrect) {
-        throw new ApolloError('Password is incorrect');
+        throw new ApolloError("Password is incorrect");
       }
 
       // generate token
       const token = jwt.sign(
         { id: user.id, email: user.email },
         process.env.JWT_SECRET,
-        { expiresIn: '2h' }
+        { expiresIn: "2h" }
       );
 
       // append token to user
